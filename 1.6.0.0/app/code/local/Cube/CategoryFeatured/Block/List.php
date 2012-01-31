@@ -37,6 +37,7 @@ class Cube_CategoryFeatured_Block_List
         $collection->addAttributeToSelect('name');      
         $collection->addAttributeToSelect('url_path');
         $collection->addAttributeToSelect('id');
+		$collection->getSelect()->order('path');
         $collection->addFieldToFilter('entity_id',array('in'=> explode(',',$this->getData('categories'))));
         //var_dump($collection);
         return $collection;
