@@ -25,10 +25,10 @@ class Cube_CategoryFeatured_Model_Categories {
 			
 			$parent_name = $this->__getParentName($category);
 			
-			$ret[] = array(
-				'value' => $category->getId(),
-				'label' => $category->getName() . $parent_name
-			);
+//			$ret[] = array(
+//				'value' => $category->getId(),
+//				'label' => $category->getName() . $parent_name
+//			);
 		}
 		return $ret;
 	}
