@@ -9,11 +9,34 @@ class Cube_CategoryFeatured_Model_Categories {
 
 	public function toOptionArray() {
 		
-		return $this->getChildCategories(0);
+		$activeCategories = array();
+        foreach ($this->getStoreCategories() as $child) {
+            if ($child->getIsActive()) {
+                $activeCategories[] = $child;
+            }
+        }
+        $activeCategoriesCount = count($activeCategories);
+        $hasActiveCategoriesCount = ($activeCategoriesCount > 0);
+
+        if (!$hasActiveCategoriesCount) {
+            return array();
+        }
+		
+		$ret = array();
+		foreach ($activeCategories as $category) {
+			$children = $this->getChildCategories($category);
+			foreach($children as $k=>$v)
+				$ret[$k] = $v;
+		}
+		return $ret;
 		
 	}
 	
 	private function getChildCategories($category,$parentname='') {
+		
+		if (!$category->getIsActive()) {
+            return '';
+        }
 		
 		$ret	=	array();
 		
@@ -37,6 +60,7 @@ class Cube_CategoryFeatured_Model_Categories {
         $activeChildrenCount = count($activeChildren);
         $hasActiveChildren = ($activeChildrenCount > 0);
 		
+		$ret[$category->getID()] = $category->getName();
 		foreach($activeChildren as $child) {
 			$childarray = $this->getChildCategories($child->getID());
 			foreach($childarray as $k => $v)
