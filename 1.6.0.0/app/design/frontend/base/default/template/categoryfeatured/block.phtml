@@ -21,7 +21,16 @@
 			<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_product->getName() ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(70) ?>" width="70" height="70" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" /></a>
 			<div class="product-shop">
 				<a class="product-name" href="<?php echo $_product->getProductUrl(); ?>"><?php echo $_product->getName()?></a>			
-				<?php echo $this->getPriceHtml($_product, false, '-widget-categoryfeatured-grid') ?>
+				<?php echo $this->getPriceHtml($_product, true, '-widget-categoryfeatured-grid') ?>
+				<?php if($_product->getRatingSummary()): ?>
+				<?php echo $this->getReviewsSummaryHtml($_product) ?>
+				<?php endif; ?>
+				<?php echo $this->getPriceHtml($_product, true) ?>
+				<?php if($_product->isSaleable()): ?>
+					<p><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+				<?php else: ?>
+					<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+				<?php endif; ?>
 			</div>
 		</li>
 		<?php if($i==count($_products) || $i%$_perrow==($_perrow-1)):?>
