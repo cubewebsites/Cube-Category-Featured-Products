@@ -20,15 +20,15 @@ class Cube_CategoryFeatured_Model_Categories {
 		$ret = array();
 		foreach ($collection as $category) {
 					
-			if($category->getLevel()==1 || !$category->getID())
+			if($category->getLevel()==1 || $category->getID()==1)
 				continue;
 			
 			$parent_name = $this->__getParentName($category);
 			
-//			$ret[] = array(
-//				'value' => $category->getId(),
-//				'label' => $category->getName() . $parent_name
-//			);
+			$ret[] = array(
+				'value' => $category->getId(),
+				'label' => $category->getName() . $parent_name
+			);
 		}
 		return $ret;
 	}
