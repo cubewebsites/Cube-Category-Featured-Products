@@ -8,28 +8,41 @@
 class Cube_CategoryFeatured_Model_Categories {
 
 	public function toOptionArray() {
-		$store = Mage::app()->getStore()->getRootCategoryId();
-		$collection = Mage::getModel('catalog/category')
-				->getCollection()
-				->setStoreId($store)
-				->addAttributeToSelect('name')
-				->addAttributeToSelect('url_path')
-				->addAttributeToSelect('is_active')
-				->addAttributeToSort('parent_id', 'ASC')
-				->addAttributeToSort('name', 'ASC');
-		$ret = array();
-		foreach ($collection as $category) {
-					
-			if($category->getLevel()==1 || $category->getID()==1)
-				continue;
-			
-			$parent_name = $this->__getParentName($category);
-			
-			$ret[] = array(
-				'value' => $category->getId(),
-				'label' => $category->getName() . $parent_name
-			);
+		
+		return $this->getChildCategories(0);
+		
+	}
+	
+	private function getChildCategories($category,$parentname='') {
+		
+		$ret	=	array();
+		
+		// get all children
+        if (Mage::helper('catalog/category_flat')->isEnabled()) {
+            $children = (array)$category->getChildrenNodes();
+            $childrenCount = count($children);
+        } else {
+            $children = $category->getChildren();
+            $childrenCount = $children->count();
+        }
+        $hasChildren = ($children && $childrenCount);
+		
+		// select active children
+        $activeChildren = array();
+        foreach ($children as $child) {
+            if ($child->getIsActive()) {
+                $activeChildren[] = $child;
+            }
+        }
+        $activeChildrenCount = count($activeChildren);
+        $hasActiveChildren = ($activeChildrenCount > 0);
+		
+		foreach($activeChildren as $child) {
+			$childarray = $this->getChildCategories($child->getID());
+			foreach($childarray as $k => $v)
+				$ret[$k]	=	$v;
 		}
+		
 		return $ret;
 	}
 	
