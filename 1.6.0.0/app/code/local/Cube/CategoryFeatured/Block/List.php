@@ -47,12 +47,12 @@ class Cube_CategoryFeatured_Block_List
     	$featured_code	=	$this->getData('featured_code')?$this->getData('featured_code'):$this->_featuredattribute;
     	$product_type	=	$this->getData('product_type');
     	
-    	$collection		=	$category->getProductCollection();
+    	$collection		=	$category->getProductCollection()->addStoreFilter();
     	$visibility = array(  
              Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,  
              Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG  
         );
-        $collection->addAttributeToFilter('visibility', $visibility);
+        $collection->addAttributeToFilter('visibility', $visibility);		
     	
 		$collection->addAttributeToSelect('*');		
 		$collection->addAttributeToFilter( 'status' , array('='=> 1) );
@@ -82,14 +82,13 @@ class Cube_CategoryFeatured_Block_List
     	$featured_code	=	$this->getData('featured_code')?$this->getData('featured_code'):$this->_featuredattribute;
     	$product_type	=	$this->getData('product_type');
     	
-    	$collection		=	$category->getProductCollection();    	
-    	
+		
+    	$collection		=	$category->getProductCollection()->addStoreFilter();    	
     	$visibility = array(  
              Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,  
              Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG  
         );
-        $collection->addAttributeToFilter('visibility', $visibility);
-		
+        $collection->addAttributeToFilter('visibility', $visibility);		
 		$collection->addAttributeToSelect('*');		
 		$collection->addAttributeToFilter( 'status' , array('='=> 1) );
 		
