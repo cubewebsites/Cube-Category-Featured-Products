@@ -1,6 +1,6 @@
 <?php
 class Cube_CategoryFeatured_Block_List
-    extends Mage_Catalog_Block_Product
+    extends Mage_Catalog_Block_Product_Abstract
     implements Mage_Widget_Block_Interface
 {
     /**
