@@ -20,7 +20,7 @@ class Cube_CategoryFeatured_Model_Categories {
 		$ret = array();
 		foreach ($collection as $category) {
 					
-			if($category->getLevel()==1)
+			if($category->getLevel()==1 || !$category->getID())
 				continue;
 			
 			$parent_name = $this->__getParentName($category);
