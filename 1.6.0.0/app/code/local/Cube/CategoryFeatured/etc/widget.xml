@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+Things to note:
+1) Default value for num_products is there for testing, may not work
+2) type= categoryfeatured/list corresponds to the Block/List.php
+3) Source model must exist, and contain a toOptionArray function
+-->
+<widgets>
+    <categoryfeatured_list type="categoryfeatured/list" translate="name description" module="categoryfeatured">
+        <name>Cube Websites - Category Featured Products</name>
+        <description>Featured Products - Grouped by Category</description>		
+        <parameters>							
+            <template translate="label">
+                <label>Frontend Template</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <values>
+                    <grid translate="label">
+                        <value>categoryfeatured/block.phtml</value>
+                        <label>Categorised</label>
+                    </grid>
+					<mixed translate="label">
+                        <value>categoryfeatured/mixed.phtml</value>
+                        <label>Mixed</label>
+                    </mixed>
+                </values>
+            </template>
+			<categories>
+				<label>Categories</label>
+				<description>Applied if using the "Categorised" Frontend Template</description>
+				<visible>1</visible>
+				<required>0</required>
+				<type>multiselect</type>
+				<source_model>Cube_CategoryFeatured_Model_Categories</source_model>
+			</categories>			
+			<num_products>
+				<label>Products per category</label>
+				<description>Applied if using the "Categorised" Frontend Template</description>
+				<visible>1</visible>
+				<required>1</required>
+				<type>text</type>
+				<default>3</default>
+			</num_products>
+			<products_per_row>
+				<label>Products Per Row</label>				
+				<visible>1</visible>
+				<required>1</required>
+				<type>text</type>				
+			</products_per_row>
+			<product_type>
+				<label>Products to Display</label>
+				<visible>1</visible>
+				<required>1</required>
+				<type>select</type>
+				<values>
+					<featured translate="label">
+						<label>Featured</label>
+						<value>featured</value>
+					</featured>
+					<!--
+					<bestsellers translate="label">
+						<label>Bestsellers</label>
+						<value>bestsellers</value>
+					</bestsellers>
+					-->
+					<all translate="label">
+						<label>All</label>
+						<value>all</value>
+					</all>
+				</values>
+			</product_type>	
+			<featured_code>
+				<label>Featured Attribute Code (needed if using Featured Display)</label>
+				<description>Leave blank to use default (cube_category_featured)</description>
+				<required>0</required>
+				<visible>1</visible>
+				<type>text</type>
+			</featured_code>
+        </parameters>
+    </categoryfeatured_list>
+</widgets> 

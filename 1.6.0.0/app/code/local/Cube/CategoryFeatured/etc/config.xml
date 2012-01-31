@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Cube_CategoryFeatured>
+            <version>0.0.1</version>
+        </Cube_CategoryFeatured>
+    </modules>
+    <global>
+        <helpers>
+            <categoryfeatured>
+                <class>Cube_CategoryFeatured_Helper</class>
+            </categoryfeatured>
+        </helpers>
+        <blocks>
+             <categoryfeatured>
+                <class>Cube_CategoryFeatured_Block</class>
+             </categoryfeatured>
+        </blocks>		
+    </global>
+	 <frontend>
+     	<layout>
+            <updates>
+                <categoryfeatured>
+                    <file>categoryfeatured.xml</file>
+                </categoryfeatured>
+            </updates>
+        </layout>
+    </frontend>
+</config> 

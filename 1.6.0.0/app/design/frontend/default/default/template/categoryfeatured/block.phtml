@@ -1,0 +1,36 @@
+<?php 
+	$_perrow		=	$this->getProductsPerRow();
+	$_categories	=	$this->_getCategories();
+	$_helper 		=	$this->helper('catalog/output');
+?>
+<?php if(count($_categories)>0):?>
+<div class="widget cw-category-featured">
+<?php foreach($_categories as $_category): ?>
+	<?php $_products	=	$this->_getProducts($_category); ?>
+	<?php if(count($_products)>0): ?>
+	<div class="widget-title">
+		<h3><a href="<?php echo $_category->getUrl();?>"><?php echo $_category->getName()?></a></h3>
+	</div>
+	<div class="widget-products">
+		<?php $i=0;?>
+		<?php foreach($_products as $_product):?>
+		<?php if($i%$_perrow==0):?>
+		<ul class="products-grid">
+		<?php endif;?>		
+		<li class="item">
+			<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_product->getName() ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(70) ?>" width="70" height="70" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" /></a>
+			<div class="product-shop">
+				<a class="product-name" href="<?php echo $_product->getProductUrl(); ?>"><?php echo $_product->getName()?></a>			
+				<?php echo $this->getPriceHtml($_product, true, '-widget-categoryfeatured-grid') ?>
+			</div>
+		</li>
+		<?php if($i==count($_products) || $i%$_perrow==($_perrow-1)):?>
+		</ul>
+		<?php endif;?>
+		<?php $i++;?>
+		<?php endforeach;?>		
+	</div>
+	<?php endif; ?>
+<?php endforeach;?>
+</div>
+<?php endif ?>
