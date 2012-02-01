@@ -118,7 +118,11 @@ class Cube_CategoryFeatured_Block_List
 	 */
 	protected function _initProductCollection($category) {
 		$collection		=	$category->getProductCollection()->addStoreFilter(); 	        
-		$collection->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes());		
+		$collection
+			->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes())
+			->addMinimalPrice()
+            ->addFinalPrice();
+            
 		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
         Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
 		return $collection;
