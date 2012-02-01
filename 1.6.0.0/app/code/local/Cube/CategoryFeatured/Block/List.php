@@ -10,6 +10,7 @@ class Cube_CategoryFeatured_Block_List
     protected $_serializer = null;
     protected $_featuredattribute	=	'cube_category_featured';
     protected $_products_per_row;
+	protected $_productCollection;
 
     /**
      * Initialization
@@ -43,18 +44,13 @@ class Cube_CategoryFeatured_Block_List
     }
     
     protected function _getProducts($category) {
-    	$featured_code	=	$this->getData('featured_code')?$this->getData('featured_code'):$this->_featuredattribute;
-    	$product_type	=	$this->getData('product_type');
     	
-    	$collection		=	$category->getProductCollection()->addStoreFilter();    	        
-		$collection->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes());		
-		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
-        Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
+    	$product_type	=	$this->getData('product_type');    	
+		$collection		=	$this->_getProductCollection($category);
 		
 		switch(strtolower($product_type)) {
 			case 'featured':
-				$collection->addAttributeToFilter( $featured_code , array('='=> 1) );
-				$collection->getSelect()->order('rand()');
+				$this->_applyFeaturedCode();
 				break;
 			//case 'bestsellers':
 				//$collection->addOrderedQty();
@@ -62,29 +58,22 @@ class Cube_CategoryFeatured_Block_List
 				//break;
 			case 'all':
 			default:
-				$collection->getSelect()->order('rand()');
+				$this->_randomizeCollection();
 				break;				
 		}
-				
-		$collection->setPage(1,(int)$this->getData('num_products'));
+		$this->_applyLimits();
 		return $collection->load();
     }
     
 	protected function _getAllProducts() {
 		
-		$category 		=	Mage::getModel('catalog/category');
-    	$featured_code	=	$this->getData('featured_code')?$this->getData('featured_code'):$this->_featuredattribute;
-    	$product_type	=	$this->getData('product_type');    	
-		
-    	$collection		=	$category->getProductCollection()->addStoreFilter();    	        
-		$collection->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes());		
-		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
-        Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
+		$category 		=	Mage::getModel('catalog/category');    	
+    	$product_type	=	$this->getData('product_type');   
+		$collection		=	$this->_getProductCollection($category);
 		
 		switch(strtolower($product_type)) {
 			case 'featured':
-				$collection->addAttributeToFilter( $featured_code , array('='=> 1) );
-				$collection->getSelect()->order('rand()');
+				$this->_applyFeaturedCode();
 				break;
 			//case 'bestsellers':
 				//$collection->addAttributeToFilter( 'best_seller' , array('='=> 1) );
@@ -93,16 +82,56 @@ class Cube_CategoryFeatured_Block_List
 				//break;
 			case 'all':
 			default:
-				$collection->getSelect()->order('rand()');
+				$this->_randomizeCollection();
 				break;				
 		}
 		
-		
-		$collection->setPage(1,(int)$this->getData('num_products'));
+		$this->_applyLimits();
 		return $collection->load();
     }
     
     public function getProductsPerRow() {
     	return $this->_products_per_row;
     }
+	
+	protected function _initProductCollection($category) {
+		$collection		=	$category->getProductCollection()->addStoreFilter(); 	        
+		$collection->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes());		
+		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
+        Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
+		return $collection;
+	}
+	
+	protected function _setProductCollection($category) {
+		$this->_productCollection = $this->_initProductCollection($category);
+		return $this->_productCollection;
+	}
+	
+	protected function _getProductCollection() {
+		if(!is_null($this->_productCollection)) {
+			return $this->_productCollection;
+		}
+		return $this->_setProductCollection($collection);	
+	}
+	
+	protected function _getFeaturedCode() {
+		return $this->getData('featured_code')?$this->getData('featured_code'):$this->_featuredattribute;
+	}
+	
+	protected function _applyFeaturedCode() {
+		$collection = $this->_getProductCollection();
+		$collection->addAttributeToFilter( $featured_code , array('='=> 1) );
+		$this->_randomizeCollection();
+		return $collection;
+	}
+	
+	protected function _randomizeCollection() {
+		$this->_getProductCollection()->getSelect()->order('rand()');
+		return $this->_getProductCollection();
+	}
+	
+	protected function _applyLimits() {
+		$this->_getProductCollection()->setPage(1,(int)$this->getData('num_products'));
+		return $this->_getProductCollection();
+	}
 } 
