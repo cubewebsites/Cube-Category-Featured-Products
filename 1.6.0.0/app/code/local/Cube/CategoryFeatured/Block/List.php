@@ -38,25 +38,18 @@ class Cube_CategoryFeatured_Block_List
         $collection->addAttributeToSelect('url_path');
         $collection->addAttributeToSelect('id');
 		$collection->getSelect()->order('path');
-        $collection->addFieldToFilter('entity_id',array('in'=> explode(',',$this->getData('categories'))));
-        //var_dump($collection);
-        return $collection;
-        explode(",",$config);    	
+        $collection->addFieldToFilter('entity_id',array('in'=> explode(',',$this->getData('categories'))));        
+        return $collection;	
     }
     
     protected function _getProducts($category) {
     	$featured_code	=	$this->getData('featured_code')?$this->getData('featured_code'):$this->_featuredattribute;
     	$product_type	=	$this->getData('product_type');
     	
-    	$collection		=	$category->getProductCollection()->addStoreFilter();
-    	$visibility = array(  
-             Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,  
-             Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG  
-        );
-        $collection->addAttributeToFilter('visibility', $visibility);		
-    	
-		$collection->addAttributeToSelect('*');		
-		$collection->addAttributeToFilter( 'status' , array('='=> 1) );
+    	$collection		=	$category->getProductCollection()->addStoreFilter();    	        
+		$collection->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes());		
+		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
+        Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
 		
 		switch(strtolower($product_type)) {
 			case 'featured':
@@ -74,24 +67,19 @@ class Cube_CategoryFeatured_Block_List
 		}
 				
 		$collection->setPage(1,(int)$this->getData('num_products'));
-		return $collection;
+		return $collection->load();
     }
     
 	protected function _getAllProducts() {
 		
 		$category 		=	Mage::getModel('catalog/category');
     	$featured_code	=	$this->getData('featured_code')?$this->getData('featured_code'):$this->_featuredattribute;
-    	$product_type	=	$this->getData('product_type');
-    	
+    	$product_type	=	$this->getData('product_type');    	
 		
-    	$collection		=	$category->getProductCollection()->addStoreFilter();    	
-    	$visibility = array(  
-             Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,  
-             Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG  
-        );
-        $collection->addAttributeToFilter('visibility', $visibility);		
-		$collection->addAttributeToSelect('*');		
-		$collection->addAttributeToFilter( 'status' , array('='=> 1) );
+    	$collection		=	$category->getProductCollection()->addStoreFilter();    	        
+		$collection->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes());		
+		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
+        Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
 		
 		switch(strtolower($product_type)) {
 			case 'featured':
@@ -111,7 +99,7 @@ class Cube_CategoryFeatured_Block_List
 		
 		
 		$collection->setPage(1,(int)$this->getData('num_products'));
-		return $collection;
+		return $collection->load();
     }
     
     public function getProductsPerRow() {
