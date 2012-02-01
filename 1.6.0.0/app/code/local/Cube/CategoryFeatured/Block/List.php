@@ -46,7 +46,8 @@ class Cube_CategoryFeatured_Block_List
     protected function _getProducts($category) {
     	
     	$product_type	=	$this->getData('product_type');    	
-		$collection		=	$this->_getProductCollection($category);
+		$this->_setProductCollection($category);
+		$collection		=	$this->_getProductCollection();
 		
 		switch(strtolower($product_type)) {
 			case 'featured':
@@ -68,8 +69,9 @@ class Cube_CategoryFeatured_Block_List
 	protected function _getAllProducts() {
 		
 		$category 		=	Mage::getModel('catalog/category');    	
-    	$product_type	=	$this->getData('product_type');   
-		$collection		=	$this->_getProductCollection($category);
+    	$product_type	=	$this->getData('product_type');
+		$this->_setProductCollection($category);
+		$collection		=	$this->_getProductCollection();
 		
 		switch(strtolower($product_type)) {
 			case 'featured':
