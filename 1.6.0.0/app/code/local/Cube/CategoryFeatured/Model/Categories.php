@@ -9,6 +9,7 @@ class Cube_CategoryFeatured_Model_Categories {
 
 	public function toOptionArray() {
 		
+		//get a list of all active top level categories
 		$activeCategories = array();		
         foreach ($this->getStoreCategories() as $child) {
             if ($child->getIsActive()) {
@@ -17,28 +18,35 @@ class Cube_CategoryFeatured_Model_Categories {
         }
         $activeCategoriesCount = count($activeCategories);
         $hasActiveCategoriesCount = ($activeCategoriesCount > 0);		
-
+		
+		//no active categories - exit
         if (!$hasActiveCategoriesCount) {
-            //return array();
+            return array();
         }
 		
+		//build up an array of active categories as value / label array
 		$ret = array();
 		foreach ($activeCategories as $category) {
-			//$ret[$category->getID()] = $category->getName();
 			$children = $this->getChildCategories($category);			
 			foreach($children as $k=>$v)
 				$ret[] = array(
 					'value' => $k,
 					'label' => $v
 				);
-			
 		}
 		return $ret;
 		
 	}
 	
+	/**
+	 * Recursively returns a value / label array of all active categories
+	 * @param Mage_Catalog_Model_Category $category
+	 * @param String $parentname
+	 * @return array 
+	 */
 	private function getChildCategories($category,$parentname='') {
 		
+		//category not active - skip it
 		if (!$category->getIsActive()) {
             return '';
         }
@@ -46,7 +54,9 @@ class Cube_CategoryFeatured_Model_Categories {
 		//array containing all the categories to return
 		$ret	=	array();
 		
-		//Makes sure root categories aren't selectable
+		/* Add the current category to return array
+		 * Root categories shouldn't be selected
+		 */
 		if($category->getLevel() > 1)
 			$ret[$category->getID()] = $category->getName() . $parentname;
 		
@@ -70,6 +80,9 @@ class Cube_CategoryFeatured_Model_Categories {
         $activeChildrenCount = count($activeChildren);
         $hasActiveChildren = ($activeChildrenCount > 0);
 		
+		/**
+		 * Use recursion to include all children categories too
+		 */
 		foreach($activeChildren as $child) {			
 			$childarray = $this->getChildCategories($child, " / " . $category->getName() . $parentname);
 			foreach($childarray as $k => $v)
@@ -79,10 +92,14 @@ class Cube_CategoryFeatured_Model_Categories {
 		return $ret;
 	}
 	
+	/**
+	 * Gets the full path of parents for a given category
+	 * @param Mage_Catalog_Model_Category $category
+	 * @return string 
+	 */
 	private function __getParentName($category) {
 		
-		$parent_name = "";
-		
+		$parent_name = "";		
 		if($category->getParentID() && $category->getParentID() > 1) {			
 			$parent = Mage::getModel('catalog/category')->load($category->getParentID());
 			$parent_name .= " / {$parent->getName()}" . $this->__getParentName($parent);
@@ -92,8 +109,7 @@ class Cube_CategoryFeatured_Model_Categories {
 	}
 	
 	/**
-     * Get catagories of current store
-     *
+     * Get categories of current store
      * @return Varien_Data_Tree_Node_Collection
      */
     public function getStoreCategories()
