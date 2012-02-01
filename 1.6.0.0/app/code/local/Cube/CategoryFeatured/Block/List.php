@@ -70,7 +70,9 @@ class Cube_CategoryFeatured_Block_List
 				break;				
 		}
 		$this->_applyLimits();
-		return $collection->load();
+		$collection->load();
+		Mage::getModel('review/review')->appendSummary($collection);
+		return $collection;
     }
     
 	/**
@@ -100,7 +102,9 @@ class Cube_CategoryFeatured_Block_List
 		}
 		
 		$this->_applyLimits();
-		return $collection->load();
+		$collection->load();
+		Mage::getModel('review/review')->appendSummary($productCollection);
+		return $collection;
     }
     
 	/**
@@ -117,12 +121,8 @@ class Cube_CategoryFeatured_Block_List
 	 * @return Varien_Data_Collection_Db
 	 */
 	protected function _initProductCollection($category) {
-		$collection		=	$category->getProductCollection()->addStoreFilter(); 	        
-		$collection
-			->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes())
-			->addMinimalPrice()
-            ->addFinalPrice();
-            
+		$collection		=	$category->getProductCollection()->addStoreFilter(); 	  
+		$this->_addProductAttributesAndPrices($collection);
 		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
         Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
 		return $collection;
