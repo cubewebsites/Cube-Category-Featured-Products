@@ -5,7 +5,7 @@
             <active>true</active>
             <codePool>local</codePool>
             <depends>
-                <Mage_Cms />
+                <Mage_Catalog />				
             </depends>
         </Cube_CategoryFeatured>
     </modules>
