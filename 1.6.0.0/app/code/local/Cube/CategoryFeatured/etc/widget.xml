@@ -35,8 +35,8 @@ Things to note:
 				<source_model>Cube_CategoryFeatured_Model_Categories</source_model>
 			</categories>			
 			<num_products>
-				<label>Products per category</label>
-				<description>Applied if using the "Categorised" Frontend Template</description>
+				<label>Number of Products</label>
+				<description>Per category for "Categorised" Frontend Template / Total for mixed Frontend Template</description>
 				<visible>1</visible>
 				<required>1</required>
 				<type>text</type>
