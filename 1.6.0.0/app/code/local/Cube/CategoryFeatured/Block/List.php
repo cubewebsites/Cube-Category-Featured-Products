@@ -80,6 +80,7 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 		$collection = $this->_setProductCollection($collection);		
 		
 		$product_type = $this->getData('product_type');
+		var_dump($product_type);
 		switch (strtolower($product_type)) {
 			case 'featured':
 				$this->_applyFeaturedCode();
