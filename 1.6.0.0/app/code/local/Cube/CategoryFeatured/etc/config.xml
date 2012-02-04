@@ -15,7 +15,34 @@
              <categoryfeatured>
                 <class>Cube_CategoryFeatured_Block</class>
              </categoryfeatured>
-        </blocks>		
+        </blocks>
+		
+		<resources>
+			<categoryfeatured_setup>
+				<setup>
+					<module>Cube_CategoryFeatured</module>
+					<class>Cube_CategoryFeatured_Model_Resource_Eav_Mysql4_Setup</class>
+				</setup>
+				
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</categoryfeatured_setup>
+			
+			<categoryfeatured_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</categoryfeatured_write>
+			
+			<categoryfeatured_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</categoryfeatured_read>
+			
+		</resources>
+		
     </global>
 	 <frontend>
      	<layout>

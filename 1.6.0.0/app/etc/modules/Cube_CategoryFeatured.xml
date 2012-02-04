@@ -2,6 +2,7 @@
 <config>
     <modules>
         <Cube_CategoryFeatured>
+			<version>1.0.0</version>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
