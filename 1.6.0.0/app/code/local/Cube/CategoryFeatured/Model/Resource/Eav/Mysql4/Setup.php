@@ -12,7 +12,7 @@ class Cube_CategoryFeatured_Model_Resource_Eav_Mysql4_Setup extends Mage_Eav_Mod
                 'entity_attribute_collection'	=> 'catalog/product_attribute_collection',
 				'attributes'					=>	array(
 					'cube_category_featured'	=>	array(
-						'group'							=>	'Group/Tab',
+						'group'							=>	'General',
 						'label'							=>	'Is Featured?',
 						'type'							=>	'boolean',
 						'input'							=>	'boolean',
