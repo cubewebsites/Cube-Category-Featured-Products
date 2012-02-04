@@ -1,5 +1,5 @@
-#Magento Category Featured Products Widget
-Magento Category Featured Products is a widget/block which lets you show featured products with the option to group by category
+#Cube Category Featured Products Widget
+Cube Category Featured Products is a widget/block which lets you show featured products with the option to group by category
 
 ##Requirements
 * Magento 1.6.0.0
