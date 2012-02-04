@@ -73,7 +73,7 @@ How many products will be displayed on each row in the frontend
 **featured_code** (optional)  
 By default this is **cube_category_featured** but if you've created your own featured attribute code then you can use that instead.
 
-4. If you need to output the block in a certain location of your template, then make sure you include the following in your .phtml file
+If you need to output the block in a certain location of your template, then make sure you include the following in your .phtml file
     `<?php echo $this->getChildHtml('featuredProducts') ?>`
 
 ##Changelog
