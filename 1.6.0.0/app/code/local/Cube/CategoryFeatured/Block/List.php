@@ -48,8 +48,7 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 */
 	protected function _getProducts($category) {
 		$product_type = $this->getData('product_type');
-		$this->_setProductCollection($category);
-		$collection = $this->_getProductCollection();
+		$collection = $this->_setProductCollection($category->getProductCollection());		
 
 		switch (strtolower($product_type)) {
 			case 'featured':
@@ -77,10 +76,10 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	protected function _getAllProducts() {
 
 		$category = Mage::getModel('catalog/category');
+		$collection = $category->getProductCollection();
+		$collection = $this->_setProductCollection($collection);		
+		
 		$product_type = $this->getData('product_type');
-		$this->_setProductCollection($category);
-		$collection = $this->_getProductCollection();
-
 		switch (strtolower($product_type)) {
 			case 'featured':
 				$this->_applyFeaturedCode();
@@ -98,7 +97,7 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 
 		$this->_applyLimits();
 		$collection->load();
-		Mage::getModel('review/review')->appendSummary($productCollection);
+		Mage::getModel('review/review')->appendSummary($collection);
 		return $collection;
 	}
 
@@ -117,8 +116,8 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 * Shouldn't be run on it's own as the collection isn't actually stored
 	 * @return Varien_Data_Collection_Db
 	 */
-	protected function _initProductCollection($category) {
-		$collection = $category->getProductCollection()->addStoreFilter();
+	protected function _initProductCollection($collection) {
+		$collection->addStoreFilter();
 		$this->_addProductAttributesAndPrices($collection);
 		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
 		Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
@@ -129,8 +128,8 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 * Sets the product collection to use based on the selected category
 	 * @return Varien_Data_Collection_Db
 	 */
-	protected function _setProductCollection($category) {
-		$this->_productCollection = $this->_initProductCollection($category);
+	protected function _setProductCollection($collection) {		
+		$this->_productCollection = $this->_initProductCollection($collection);
 		return $this->_productCollection;
 	}
 
@@ -142,7 +141,7 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 		if (!is_null($this->_productCollection)) {
 			return $this->_productCollection;
 		}
-		return $this->_setProductCollection($collection);
+		return $this->_productCollection;
 	}
 
 	/**
