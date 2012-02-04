@@ -77,7 +77,11 @@ If you need to output the block in a certain location of your template, then mak
     `<?php echo $this->getChildHtml('featuredProducts') ?>`
 
 ##Changelog
-**2.0 Major Upgrade**
+**2.0.1 Bug Fix**
+
+* Changed codebase from local to community
+
+**2.0.0 Major Upgrade**
 
 *  Massive code rewrite
 *  Made to work with Magento 1.6.0.0
@@ -93,4 +97,4 @@ If you need to output the block in a certain location of your template, then mak
 *  Created documentation
 *  Bug fixes
 
-**1.0 Initial Release**
+**1.0.0 Initial Release**
