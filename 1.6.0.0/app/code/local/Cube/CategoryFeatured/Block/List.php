@@ -17,9 +17,8 @@ class Cube_CategoryFeatured_Block_List
      */
     protected function _construct()
     {
-        $this->_serializer = new Varien_Object();
-        $this->_products_per_row	=	(int)$this->getData('products_per_row')?(int)$this->getData('products_per_row'):3;	
-        parent::_construct();        
+        $this->_serializer			=	new Varien_Object();
+        parent::_construct();
     }
 
     /**
@@ -27,8 +26,8 @@ class Cube_CategoryFeatured_Block_List
      * @return string
      */
     protected function _toHtml()
-    {        
-        return $this->renderView();
+    {
+		return $this->renderView();
     }
 
 	/**
@@ -38,24 +37,24 @@ class Cube_CategoryFeatured_Block_List
     protected function _getCategories() {
     	$category 	= Mage::getModel('catalog/category');
         $collection = $category->getCollection();
-        $collection->addAttributeToSelect('name');      
+        $collection->addAttributeToSelect('name');
         $collection->addAttributeToSelect('url_path');
         $collection->addAttributeToSelect('id');
 		$collection->getSelect()->order('path');
-        $collection->addFieldToFilter('entity_id',array('in'=> explode(',',$this->getData('categories'))));        
-        return $collection;	
+        $collection->addFieldToFilter('entity_id',array('in'=> explode(',',$this->getData('categories'))));
+        return $collection;
     }
-    
+
 	/**
 	 * Fetches product for a specified category
 	 * @return Varien_Data_Collection_Db
 	 */
     protected function _getProducts($category) {
-    	
-    	$product_type	=	$this->getData('product_type');    	
+
+    	$product_type	=	$this->getData('product_type');
 		$this->_setProductCollection($category);
 		$collection		=	$this->_getProductCollection();
-		
+
 		switch(strtolower($product_type)) {
 			case 'featured':
 				$this->_applyFeaturedCode();
@@ -67,25 +66,25 @@ class Cube_CategoryFeatured_Block_List
 			case 'all':
 			default:
 				$this->_randomizeCollection();
-				break;				
+				break;
 		}
 		$this->_applyLimits();
 		$collection->load();
 		Mage::getModel('review/review')->appendSummary($collection);
 		return $collection;
     }
-    
+
 	/**
 	 * Fetches products for all categories
 	 * @return Varien_Data_Collection_Db
 	 */
 	protected function _getAllProducts() {
-		
-		$category 		=	Mage::getModel('catalog/category');    	
+
+		$category 		=	Mage::getModel('catalog/category');
     	$product_type	=	$this->getData('product_type');
 		$this->_setProductCollection($category);
 		$collection		=	$this->_getProductCollection();
-		
+
 		switch(strtolower($product_type)) {
 			case 'featured':
 				$this->_applyFeaturedCode();
@@ -98,36 +97,38 @@ class Cube_CategoryFeatured_Block_List
 			case 'all':
 			default:
 				$this->_randomizeCollection();
-				break;				
+				break;
 		}
-		
+
 		$this->_applyLimits();
 		$collection->load();
 		Mage::getModel('review/review')->appendSummary($productCollection);
 		return $collection;
     }
-    
+
 	/**
 	 * How many products are displayed per row
 	 * @return int
 	 */
     public function getProductsPerRow() {
+		if(is_null($this->_products_per_row))
+			$this->_products_per_row	=	(int)$this->getData('products_per_row')?(int)$this->getData('products_per_row'):3;
     	return $this->_products_per_row;
     }
-	
+
 	/**
 	 * Run whenever a new product collection set to apply basic filters
 	 * Shouldn't be run on it's own as the collection isn't actually stored
 	 * @return Varien_Data_Collection_Db
 	 */
 	protected function _initProductCollection($category) {
-		$collection		=	$category->getProductCollection()->addStoreFilter(); 	  
+		$collection		=	$category->getProductCollection()->addStoreFilter();
 		$this->_addProductAttributesAndPrices($collection);
 		Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
         Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
 		return $collection;
 	}
-	
+
 	/**
 	 * Sets the product collection to use based on the selected category
 	 * @return Varien_Data_Collection_Db
@@ -136,7 +137,7 @@ class Cube_CategoryFeatured_Block_List
 		$this->_productCollection = $this->_initProductCollection($category);
 		return $this->_productCollection;
 	}
-	
+
 	/**
 	 * Fetches the product collection object
 	 * @return Varien_Data_Collection_Db
@@ -145,9 +146,9 @@ class Cube_CategoryFeatured_Block_List
 		if(!is_null($this->_productCollection)) {
 			return $this->_productCollection;
 		}
-		return $this->_setProductCollection($collection);	
+		return $this->_setProductCollection($collection);
 	}
-	
+
 	/**
 	 *
 	 * Gets the featured attribute handle to use for filtering
@@ -156,7 +157,7 @@ class Cube_CategoryFeatured_Block_List
 	protected function _getFeaturedCode() {
 		return $this->getData('featured_code')?$this->getData('featured_code'):$this->_featuredattribute;
 	}
-	
+
 	/**
 	 * Ensures only featured products are returned
 	 * @return Varien_Data_Collection_Db
@@ -168,7 +169,7 @@ class Cube_CategoryFeatured_Block_List
 		$this->_randomizeCollection();
 		return $collection;
 	}
-	
+
 	/**
 	 * Orders the results randomly
 	 * @return Varien_Data_Collection_Db
@@ -177,7 +178,7 @@ class Cube_CategoryFeatured_Block_List
 		$this->_getProductCollection()->getSelect()->order('rand()');
 		return $this->_getProductCollection();
 	}
-	
+
 	/**
 	 * Sets limits based on the num_products widget option
 	 * @return Varien_Data_Collection_Db
@@ -186,4 +187,4 @@ class Cube_CategoryFeatured_Block_List
 		$this->_getProductCollection()->setPage(1,(int)$this->getData('num_products'));
 		return $this->_getProductCollection();
 	}
-} 
+}
