@@ -45,7 +45,7 @@ class Cube_CategoryFeatured_Model_Categories {
 	 * Recursively returns a value / label array of all active categories
 	 * @param Mage_Catalog_Model_Category $category
 	 * @param String $parentname
-	 * @return array
+	 * @return array 
 	 */
 	private function getChildCategories($category, $parentname='') {
 
@@ -98,7 +98,7 @@ class Cube_CategoryFeatured_Model_Categories {
 	/**
 	 * Gets the full path of parents for a given category
 	 * @param Mage_Catalog_Model_Category $category
-	 * @return string
+	 * @return string 
 	 */
 	private function __getParentName($category) {
 
