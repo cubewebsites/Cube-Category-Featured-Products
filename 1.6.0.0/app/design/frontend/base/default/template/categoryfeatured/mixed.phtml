@@ -4,7 +4,7 @@
 	$_products		=	$this->_getAllProducts();
 ?>
 <?php if(count($_products)>0): ?>
-<div class="widget widget-new-products">	
+<div class="widget cw-category-featured">		
 	<div class="widget-title">
 		<h3><?php echo $this->__('Featured Products'); ?></h3>
 	</div>
@@ -34,6 +34,6 @@
 		<?php endif;?>
 		<?php $i++;?>
 		<?php endforeach;?>		
-	</div>	
+	</div>
 </div>
 <?php endif ?>
