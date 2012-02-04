@@ -1,4 +1,13 @@
 <?php
+/**
+* Logic to fetch products for displaying the Featured Products widget
+*
+* @author 	    Cube Websites
+* @copyright	Cube Websites 2012
+* @version	    2.0
+* @package	    Cube_CategoryFeatured
+* @link         https://github.com/cubewebsites/Cube-Category-Featured-Products
+*/
 
 class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstract implements Mage_Widget_Block_Interface {
 

@@ -1,9 +1,13 @@
 <?php
-
-/* Updated to make it easier to show which store a category belongs to (for multiple stores with same category names)
- * Thanks to Eric
- * http://www.cubewebsites.com/blog/magento/freebie-magento-featured-products-widget/comment-page-1/#comment-452
- */
+/**
+* Allows Categories to be selected via the admin
+*
+* @author 	    Cube Websites
+* @copyright	Cube Websites 2012
+* @version	    2.0
+* @package	    Cube_CategoryFeatured
+* @link         https://github.com/cubewebsites/Cube-Category-Featured-Products
+*/
 
 class Cube_CategoryFeatured_Model_Categories {
 
