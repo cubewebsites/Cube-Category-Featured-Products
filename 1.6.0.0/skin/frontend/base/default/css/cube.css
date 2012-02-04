@@ -1,9 +1,9 @@
-.cw-category-featured .widget-title { clear:both; line-height:24px;border:1px solid #e7e7e7;color:#9b1233;padding:0 10px 0; margin:0 0 15px 0; background:url(../images/bkg_widget_title.gif) 8px center no-repeat #fbfbfb; }
+.cw-category-featured .widget-title { clear:both; line-height:24px;border:1px solid #e7e7e7;padding:0 10px 0; margin:0 0 15px 0; background:url(../images/bkg_widget_title.gif) 8px center no-repeat #fbfbfb; }
 .cw-category-featured .widget-title h2,
-.cw-category-featured .widget-title h3 { font-size:12px; font-weight:bold; color:#9b1233; line-height:24px; margin:0px; }
+.cw-category-featured .widget-title h3 { font-size:12px; font-weight:bold; line-height:24px; margin:0px; }
 
 
-/* Widget: Catalog New Proructs List */
+/* Widget: Cube Category Featured */
 .cw-category-featured { display:block; }
 .col-main .cw-category-featured { margin:0 0 7px 0; }
 .cw-category-featured .widget-products {margin-bottom:5px;}
@@ -13,6 +13,6 @@
 .cw-category-featured .products-list .product-image { width:70px; height:70px; float:left;border:none; }
 .cw-category-featured .products-list .product-shop { margin-left:100px; }
 .cw-category-featured .products-grid .product-shop { margin-left:80px;font-size:10px; }
-.cw-category-featured .products-grid .product-shop .product-name {color:#636262;font-size:10px;font-weight:bold; }
+.cw-category-featured .products-grid .product-shop .product-name {font-size:10px;font-weight:bold; }
 .cw-category-featured .products-grid .product-shop .price {font-size:11px;}
 .cw-category-featured .products-grid .item {width:160px;padding-bottom:0px;margin-right:10px;}
