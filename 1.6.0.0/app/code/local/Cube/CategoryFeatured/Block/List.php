@@ -16,7 +16,30 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 */
 	protected function _construct() {
 		$this->_serializer = new Varien_Object();
+
+		$this->addData(array(
+			'cache_lifetime' => 86400,
+			'cache_tags' => array(Mage_Catalog_Model_Product::CACHE_TAG),
+		));
+
 		parent::_construct();
+	}
+
+	/**
+	 * Get Key pieces for caching block content
+	 *
+	 * @return array
+	 */
+	public function getCacheKeyInfo() {
+		return array(
+			'CATALOG_PRODUCT_CATEGORY_FEATURED',
+			Mage::app()->getStore()->getId(),
+			Mage::getDesign()->getPackageName(),
+			Mage::getDesign()->getTheme('template'),
+			Mage::getSingleton('customer/session')->getCustomerGroupId(),
+			'template' => $this->getTemplate(),
+			md5(serialize($this->getData()))
+		);
 	}
 
 	/**
@@ -48,7 +71,7 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 */
 	protected function _getProducts($category) {
 		$product_type = $this->getData('product_type');
-		$collection = $this->_setProductCollection($category->getProductCollection());		
+		$collection = $this->_setProductCollection($category->getProductCollection());
 
 		switch (strtolower($product_type)) {
 			case 'featured':
@@ -74,15 +97,14 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 * @return Varien_Data_Collection_Db
 	 */
 	protected function _getAllProducts() {
-
 		$rootCategoryId = Mage::app()->getStore()->getRootCategoryId();
 		$category = Mage::getModel('catalog/category')->load($rootCategoryId);
 		$collection = $category->getProductCollection();
-		
-		$collection	=	Mage::getModel('catalog/product')->getCollection();
-		$collection = $this->_setProductCollection($collection);		
-		
-		$product_type = $this->getData('product_type');		
+
+		$collection = Mage::getModel('catalog/product')->getCollection();
+		$collection = $this->_setProductCollection($collection);
+
+		$product_type = $this->getData('product_type');
 		switch (strtolower($product_type)) {
 			case 'featured':
 				$this->_applyFeaturedCode();
@@ -131,7 +153,7 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 * Sets the product collection to use based on the selected category
 	 * @return Varien_Data_Collection_Db
 	 */
-	protected function _setProductCollection($collection) {		
+	protected function _setProductCollection($collection) {
 		$this->_productCollection = $this->_initProductCollection($collection);
 		return $this->_productCollection;
 	}
@@ -181,10 +203,10 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 * Sets limits based on the num_products widget option
 	 * @return Varien_Data_Collection_Db
 	 */
-	protected function _applyLimits() {		
+	protected function _applyLimits() {
 		$this->_getProductCollection()
-			->setPageSize((int) $this->getData('num_products'))
-			->setCurPage(1);		
+				->setPageSize((int) $this->getData('num_products'))
+				->setCurPage(1);
 		return $this->_getProductCollection();
 	}
 
