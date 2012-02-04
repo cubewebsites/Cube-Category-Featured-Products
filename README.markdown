@@ -53,7 +53,7 @@ By default this is **cube_category_featured** but if you've created your own fea
 	</block>
 
 **template**  
-`categoryfeatured/block.phtml` - Displays the products grouped by the category they belong in
+`categoryfeatured/block.phtml` - Displays the products grouped by the category they belong in  
 `categoryfeatured/mixed.phtml` - Displays all the products in a single block with no grouping
 
 **categories** (only applies if _categoryfeatured/block.phtml_ template is selected)  
@@ -66,7 +66,7 @@ If `categoryfeatured/mixed.phtml` - the total number of products
 **products_per_row**  
 How many products will be displayed on each row in the frontend  
 
-**Products to Display**  
+**product_type**  
 `featured` - Displays featured products only  
 `all` - Displays all available products  
 
@@ -74,10 +74,11 @@ How many products will be displayed on each row in the frontend
 By default this is **cube_category_featured** but if you've created your own featured attribute code then you can use that instead.
 
 4. If you need to output the block in a certain location of your template, then make sure you include the following in your .phtml file
-    <?php echo $this->getChildHtml('featuredProducts') ?>
+    `<?php echo $this->getChildHtml('featuredProducts') ?>`
 
 ##Changelog
-`2.0 Major Upgrade`  
+**2.0 Major Upgrade**
+
 *  Massive code rewrite
 *  Made to work with Magento 1.6.0.0
 *  Added caching
@@ -92,4 +93,4 @@ By default this is **cube_category_featured** but if you've created your own fea
 *  Created documentation
 *  Bug fixes
 
-`1.0 Initial Release`  
+**1.0 Initial Release**
