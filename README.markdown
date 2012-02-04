@@ -43,6 +43,7 @@ By default this is **cube_category_featured** but if you've created your own fea
 1. Open your favourite text editor
 2. Within find the Layout XML you want to add the block to within the app/design/frontend directory
 3. In your _.xml_ file, add the following in the relevant position  
+
 		<block type="categoryfeatured/list" name="featured_products" as="featuredProducts" template="categoryfeatured/block.phtml">
 			<action method="setData"><name>categories</name><value>1,2,3,4</value></action>
 			<action method="setData"><name>num_products</name><value>4</value></action>
