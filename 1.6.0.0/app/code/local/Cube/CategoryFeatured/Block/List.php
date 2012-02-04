@@ -47,7 +47,6 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	 * @return Varien_Data_Collection_Db
 	 */
 	protected function _getProducts($category) {
-
 		$product_type = $this->getData('product_type');
 		$this->_setProductCollection($category);
 		$collection = $this->_getProductCollection();
@@ -162,7 +161,7 @@ class Cube_CategoryFeatured_Block_List extends Mage_Catalog_Block_Product_Abstra
 	protected function _applyFeaturedCode() {
 		$featuredcode = $this->_getFeaturedCode();
 		$collection = $this->_getProductCollection();
-		$collection->addAttributeToFilter($featured_code, array('=' => 1));
+		$collection->addAttributeToFilter($featuredcode, array('=' => 1));
 		$this->_randomizeCollection();
 		return $collection;
 	}

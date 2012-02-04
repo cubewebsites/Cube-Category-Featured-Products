@@ -14,7 +14,7 @@ class Cube_CategoryFeatured_Model_Resource_Eav_Mysql4_Setup extends Mage_Eav_Mod
 					'cube_category_featured'	=>	array(
 						'group'							=>	'General',
 						'label'							=>	'Is Featured?',
-						'type'							=>	'boolean',
+						'type'							=>	'int',
 						'input'							=>	'boolean',
 						'default'						=>	'0',
 						'class'							=>	'',
