@@ -2,7 +2,7 @@
 Cube Category Featured Products is a widget/block which lets you show featured products with the option to group by category
 
 ##Requirements
-* Magento 1.4.0.0 - 1.6.2.0
+* Magento 1.4.0.0 - 1.7.0.2
 
 ## Installation
 Copy the `app` and `skin` directories into your Magento installation  
@@ -77,6 +77,10 @@ If you need to output the block in a certain location of your template, then mak
     `<?php echo $this->getChildHtml('featuredProducts') ?>`
 
 ##Changelog
+
+**2.1**
+* 1.7.0.2 Compatibility
+
 **2.0 Major Upgrade**
 
 *  Massive code rewrite
