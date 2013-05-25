@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Cube_CategoryFeatured>
+            <version>2.0.0</version>
+        </Cube_CategoryFeatured>
+    </modules>
+    <global>
+        <helpers>
+            <categoryfeatured>
+                <class>Cube_CategoryFeatured_Helper</class>
+            </categoryfeatured>
+        </helpers>
+        <blocks>
+             <categoryfeatured>
+                <class>Cube_CategoryFeatured_Block</class>
+             </categoryfeatured>
+        </blocks>
+		
+		<resources>
+			<categoryfeatured_setup>
+				<setup>
+					<module>Cube_CategoryFeatured</module>
+					<class>Cube_CategoryFeatured_Model_Resource_Eav_Mysql4_Setup</class>
+				</setup>
+				
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</categoryfeatured_setup>
+			
+			<categoryfeatured_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</categoryfeatured_write>
+			
+			<categoryfeatured_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</categoryfeatured_read>
+			
+		</resources>
+		
+    </global>
+	 <frontend>
+     	<layout>
+            <updates>
+                <categoryfeatured>
+                    <file>categoryfeatured.xml</file>
+                </categoryfeatured>
+            </updates>
+        </layout>
+    </frontend>
+</config> 
